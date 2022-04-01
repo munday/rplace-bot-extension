@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         A fork of PlaceNL's r/place bot
-// @namespace    https://github.com/darenliang/rplace-extension
+// @namespace    https://github.com/darenliang/rplace-bot-extension
 // @version      3
 // @description  A fork of PlaceNL's r/place bot
 // @author       NoahvdAa
@@ -9,13 +9,11 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=reddit.com
 // @require	     https://cdn.jsdelivr.net/npm/toastify-js
 // @resource     TOASTIFY_CSS https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css
-// @updateURL    https://raw.githubusercontent.com/darenliang/rplace-extension/custom/bot.user.js
-// @downloadURL  https://raw.githubusercontent.com/darenliang/rplace-extension/custom/bot.user.js
+// @updateURL    https://raw.githubusercontent.com/darenliang/rplace-bot-extension/custom/bot.user.js
+// @downloadURL  https://raw.githubusercontent.com/darenliang/rplace-bot-extension/custom/bot.user.js
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
 // ==/UserScript==
-
-// Sorry voor de rommelige code, haast en clean gaatn iet altijd samen ;)
 
 var placeOrders = [];
 var accessToken;
@@ -47,12 +45,12 @@ const COLOR_MAPPINGS = {
 	canvas = document.body.appendChild(canvas);
 
 	Toastify({
-		text: 'Accesstoken ophalen...',
+		text: 'Getting access token',
 		duration: 10000
 	}).showToast();
 	accessToken = await getAccessToken();
 	Toastify({
-		text: 'Accesstoken opgehaald!',
+		text: 'Obtained access token',
 		duration: 10000
 	}).showToast();
 
@@ -67,12 +65,12 @@ async function attemptPlace() {
 		const canvasUrl = await getCurrentImageUrl();
 		ctx = await getCanvasFromUrl(canvasUrl);
 	} catch (e) {
-		console.warn('Fout bij ophalen map: ', e);
+		console.warn('Error retrieving current image: ', e);
 		Toastify({
-			text: 'Fout bij ophalen map. Opnieuw proberen in 15 sec...',
+			text: 'Error retrieving current image. Retrying in 15 secs',
 			duration: 10000
 		}).showToast();
-		setTimeout(attemptPlace, 15000); // probeer opnieuw in 15sec.
+		setTimeout(attemptPlace, 15000);
 		return;
 	}
 
@@ -87,13 +85,13 @@ async function attemptPlace() {
 		if (currentColorId == colorId) continue;
 
 		Toastify({
-			text: `Pixel proberen te plaatsen op ${x}, ${y}...`,
+			text: `Setting pixel at ${x}, ${y}`,
 			duration: 10000
 		}).showToast();
 		await place(x, y, colorId);
 
 		Toastify({
-			text: `Wachten op cooldown...`,
+			text: `On cooldown`,
 			duration: 315000
 		}).showToast();
 		setTimeout(attemptPlace, 315000); // 5min en 15sec, just to be safe.
@@ -101,7 +99,7 @@ async function attemptPlace() {
 	}
 
 	Toastify({
-		text: 'Alle pixels staan al op de goede plaats!',
+		text: 'All pixels are set!',
 		duration: 10000
 	}).showToast();
 	setTimeout(attemptPlace, 30000); // probeer opnieuw in 30sec.
@@ -109,18 +107,18 @@ async function attemptPlace() {
 
 function updateOrders() {
 	fetch('https://raw.githubusercontent.com/darenliang/rplace-extension/custom/orders.json').then(async (response) => {
-		if (!response.ok) return console.warn('Kan orders niet ophalen! (non-ok status code)');
+		if (!response.ok) return console.warn('Unable to retrieve orders');
 		const data = await response.json();
 
 		if (JSON.stringify(data) !== JSON.stringify(placeOrders)) {
 			Toastify({
-				text: `Nieuwe orders geladen. Totaal aantal pixels: ${data.length}.`,
+				text: `Orders loaded. Total pixels: ${data.length}.`,
 				duration: 10000
 			}).showToast();
 		}
 
 		placeOrders = data;
-	}).catch((e) => console.warn('Kan orders niet ophalen!', e));
+	}).catch((e) => console.warn('Unable to retrieve orders', e));
 }
 
 function place(x, y, color) {
