@@ -106,7 +106,7 @@ async function attemptPlace() {
 }
 
 function updateOrders() {
-	fetch('https://raw.githubusercontent.com/darenliang/rplace-extension/custom/orders.json').then(async (response) => {
+	fetch('https://raw.githubusercontent.com/darenliang/rplace-bot-extension/custom/orders.json').then(async (response) => {
 		if (!response.ok) return console.warn('Unable to retrieve orders');
 		const data = await response.json();
 
