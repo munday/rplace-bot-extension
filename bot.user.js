@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name         PlaceNL Bot
-// @namespace    https://github.com/PlaceNL/Bot
+// @name         A fork of PlaceNL's r/place bot
+// @namespace    https://github.com/darenliang/rplace-extension
 // @version      3
-// @description  De bot voor PlaceNL!
+// @description  A fork of PlaceNL's r/place bot
 // @author       NoahvdAa
 // @match        https://www.reddit.com/r/place/*
 // @match        https://new.reddit.com/r/place/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=reddit.com
 // @require	     https://cdn.jsdelivr.net/npm/toastify-js
 // @resource     TOASTIFY_CSS https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css
-// @updateURL    https://github.com/PlaceNL/Bot/raw/master/placenlbot.user.js
-// @downloadURL  https://github.com/PlaceNL/Bot/raw/master/placenlbot.user.js
+// @updateURL    https://raw.githubusercontent.com/darenliang/rplace-extension/custom/bot.user.js
+// @downloadURL  https://raw.githubusercontent.com/darenliang/rplace-extension/custom/bot.user.js
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -108,7 +108,7 @@ async function attemptPlace() {
 }
 
 function updateOrders() {
-	fetch('https://raw.githubusercontent.com/darenliang/darenliang.com/master/static/misc/orders.json').then(async (response) => {
+	fetch('https://raw.githubusercontent.com/darenliang/rplace-extension/custom/orders.json').then(async (response) => {
 		if (!response.ok) return console.warn('Kan orders niet ophalen! (non-ok status code)');
 		const data = await response.json();
 
