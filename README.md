@@ -7,7 +7,7 @@ Image used at (251, 529):
 
 ## Instructions
 
-Before you start, make sure your pixel latency has expired.
+Before you start, make sure your pixel cooldown has expired.
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/) or an equivalent userscript manager
 2. Install the [userscript](https://raw.githubusercontent.com/darenliang/rplace-bot-extension/custom/bot.user.js)
