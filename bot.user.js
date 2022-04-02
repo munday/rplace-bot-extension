@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A fork of PlaceNL's r/place bot
 // @namespace    https://github.com/darenliang/rplace-bot-extension
-// @version      3
+// @version      4
 // @description  A fork of PlaceNL's r/place bot
 // @author       NoahvdAa
 // @match        https://www.reddit.com/r/place/*
@@ -152,7 +152,9 @@ function place(x, y, color) {
 }
 
 async function getAccessToken() {
-	const response = await fetch('https://www.reddit.com/r/place/');
+	const usingOldReddit = window.location.href.includes('new.reddit.com');
+	const url = usingOldReddit ? 'https://new.reddit.com/r/place/' : 'https://www.reddit.com/r/place/';
+	const response = await fetch(url);
 	const responseText = await response.text();
 
 	// TODO: ew
