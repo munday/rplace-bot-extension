@@ -2,7 +2,7 @@
 
 This bot fetches orders and place tiles every 5 mins.
 
-Image used at (657, 554):
+Image used at (251, 529):
 ![UofT](example.png)
 
 ## Instructions
